@@ -59,19 +59,6 @@
             background-color: rgba(255, 255, 255, 0.9);
         }
 
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
         .result {
             font-size: 100px;
             color: white;
@@ -90,7 +77,7 @@
             margin-top: 50px;
             backdrop-filter: blur(10px);
             padding: 20px;
-            background-color: rgba(255, 255, 255, 0.5);
+            background-color: rgba(255, 255, 0.5);
             border-radius: 10px;
             display: inline-block;
             text-align: center;
@@ -128,13 +115,10 @@
     <button onclick="showResult('no')">No</button>
     <button onclick="showResult('yes')">Yes</button>
 
-    <div id="overlay" class="overlay">
-        <div id="result" class="result"></div>
-    </div>
-
     <audio id="right-sound" src="right.mp3"></audio>
     <audio id="wrong-sound" src="wrong.mp3"></audio>
     <audio id="background-sound" src="sound.mp3" loop></audio>
+    <audio id="smoke-sound" src="smoke.mp3"></audio>
 
     <div class="fpl-loser">
         <h2>This week's FPL loser!</h2>
@@ -147,8 +131,20 @@
         backgroundSound.volume = 0.1;
         backgroundSound.play();
 
+        // Function to play 'smoke.mp3' randomly every 10 to 30 seconds
+        function playSmokeSoundRandomly() {
+            setInterval(() => {
+                const delay = Math.random() * (30000 - 10000) + 10000; // Random delay between 10 to 30 seconds
+                setTimeout(() => {
+                    const smokeSound = document.getElementById('smoke-sound');
+                    smokeSound.play();
+                }, delay);
+            }, 30000); // Start the interval
+        }
+
+        playSmokeSoundRandomly();
+
         function showResult(answer) {
-            const overlay = document.getElementById('overlay');
             const result = document.getElementById('result');
             const rightSound = document.getElementById('right-sound');
             const wrongSound = document.getElementById('wrong-sound');
@@ -165,10 +161,11 @@
                 rightSound.play();
             }
 
-            overlay.style.display = 'flex';
+            result.style.display = 'block';
 
+            // Make result disappear after 1.5 seconds
             setTimeout(() => {
-                overlay.style.display = 'none';
+                result.style.display = 'none';
             }, 1500);
         }
     </script>
