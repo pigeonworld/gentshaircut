@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gents Haircut</title>
     <style>
+        @font-face {
+            font-family: 'Papyrus';
+            src: url('papyrus.ttf') format('truetype');
+        }
+
         :root {
             --primary-color: #2a2a2a;
             --accent-color: #4a90e2;
@@ -18,7 +23,7 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Papyrus', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--background-color);
             min-height: 100vh;
             display: flex;
@@ -42,9 +47,26 @@
             z-index: -1;
         }
 
+        .flying-person {
+            position: fixed;
+            width: 100px;
+            height: auto;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
         @keyframes backgroundPulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.1); }
+        }
+
+        @keyframes flyAcross {
+            0% {
+                transform: translate(-120px, 0) rotate(0deg);
+            }
+            100% {
+                transform: translate(calc(100vw + 120px), 0) rotate(360deg);
+            }
         }
 
         .container {
@@ -55,6 +77,7 @@
             flex-direction: column;
             align-items: center;
             gap: 2rem;
+            z-index: 1;
         }
 
         h1 {
@@ -78,6 +101,7 @@
         }
 
         button {
+            font-family: 'Papyrus', sans-serif;
             font-size: 1.2rem;
             padding: 1rem 2.5rem;
             border: none;
@@ -113,7 +137,7 @@
             display: none;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            z-index: 1001;
             backdrop-filter: blur(5px);
         }
 
@@ -235,6 +259,27 @@
                 console.log('Auto-play prevented');
             });
 
+            function createFlyingPerson() {
+                const person = document.createElement('img');
+                person.src = 'person.png';
+                person.className = 'flying-person';
+                
+                // Random vertical position
+                const verticalPosition = Math.random() * (window.innerHeight - 100);
+                person.style.top = verticalPosition + 'px';
+                
+                // Random duration between 2 and 4 seconds
+                const duration = 2 + Math.random() * 2;
+                person.style.animation = `flyAcross ${duration}s linear`;
+                
+                document.body.appendChild(person);
+                
+                // Remove the element after animation
+                person.addEventListener('animationend', () => {
+                    person.remove();
+                });
+            }
+
             function playSmokeSoundRandomly() {
                 setInterval(() => {
                     const delay = Math.random() * (30000 - 10000) + 10000;
@@ -243,6 +288,8 @@
                         smokeSound.play().catch(() => {
                             console.log('Smoke sound prevented');
                         });
+                        // Create flying person when smoke sound plays
+                        createFlyingPerson();
                     }, delay);
                 }, 30000);
             }
