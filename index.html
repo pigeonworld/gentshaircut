@@ -1,1 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Louis Oscar Meme</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
 
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .result {
+            font-size: 100px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .green {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Is the Louis Oscar gents haircut meme still massive?</h1>
+    <button onclick="showResult('no')">No</button>
+    <button onclick="showResult('yes')">Yes</button>
+
+    <div id="overlay" class="overlay">
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function showResult(answer) {
+            const overlay = document.getElementById('overlay');
+            const result = document.getElementById('result');
+
+            if (answer === 'yes') {
+                result.textContent = 'X';
+                result.classList.add('red');
+                result.classList.remove('green');
+            } else {
+                result.textContent = '\u2713'; // Unicode for a tick
+                result.classList.add('green');
+                result.classList.remove('red');
+            }
+
+            overlay.style.display = 'flex';
+
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
