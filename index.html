@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- Previous head content remains the same until the audio elements -->
 <head>
+    <!-- Previous head content remains exactly the same -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gents Haircut</title>
     <style>
+        /* All previous styles remain exactly the same */
         @font-face {
             font-family: 'Papyrus';
             src: url('papyrus.ttf') format('truetype');
@@ -298,12 +301,30 @@
     <audio id="right-sound" src="right.mp3"></audio>
     <audio id="wrong-sound" src="wrong.mp3"></audio>
     <audio id="background-sound" src="sound.mp3" loop></audio>
+    <audio id="smoke-sound" src="smoke.mp3"></audio>
 
     <script>
         // Play background sound at 10% volume
         const backgroundSound = document.getElementById('background-sound');
-        backgroundSound.volume = 1;
+        backgroundSound.volume = 0.1;
         backgroundSound.play();
+
+        // Get smoke sound element
+        const smokeSound = document.getElementById('smoke-sound');
+        smokeSound.volume = 0.5; // Set volume to 50%
+
+        // Function to play smoke sound
+        function playSmoke() {
+            smokeSound.currentTime = 0; // Reset the audio to start
+            smokeSound.play();
+            
+            // Schedule next smoke sound
+            const nextDelay = Math.random() * (30000 - 10000) + 10000; // Random delay between 10-30 seconds
+            setTimeout(playSmoke, nextDelay);
+        }
+
+        // Start the smoke sound loop
+        setTimeout(playSmoke, Math.random() * (30000 - 10000) + 10000);
 
         function showResult(answer) {
             const overlay = document.getElementById('overlay');
