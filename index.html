@@ -13,7 +13,7 @@
         body {
             font-family: 'Papyrus', Arial, sans-serif;
             text-align: center;
-            padding: 50px;
+            padding: 20px;
             margin: 0;
             overflow: hidden;
             background: url('fpl.png') repeat;
@@ -36,10 +36,11 @@
             display: inline-block;
             padding: 10px;
             border-radius: 10px;
+            font-size: 1.5em;
         }
 
         button {
-            font-size: 20px;
+            font-size: 1.2em;
             padding: 10px 20px;
             margin: 10px;
             cursor: pointer;
@@ -90,6 +91,22 @@
             border: 2px solid black;
             border-radius: 10px;
         }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.2em;
+                padding: 5px;
+            }
+
+            button {
+                font-size: 1em;
+                padding: 8px 16px;
+            }
+
+            .result {
+                font-size: 80px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -103,6 +120,7 @@
 
     <audio id="right-sound" src="right.mp3"></audio>
     <audio id="wrong-sound" src="wrong.mp3"></audio>
+    <audio id="background-sound" src="sound.mp3" loop></audio>
 
     <div class="fpl-loser">
         <h2>This week's FPL loser!</h2>
@@ -110,6 +128,11 @@
     </div>
 
     <script>
+        // Play background sound at 10% volume
+        const backgroundSound = document.getElementById('background-sound');
+        backgroundSound.volume = 0.1;
+        backgroundSound.play();
+
         function showResult(answer) {
             const overlay = document.getElementById('overlay');
             const result = document.getElementById('result');
