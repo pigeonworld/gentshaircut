@@ -1,1 +1,365 @@
-whoops hold on
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gents Haircut</title>
+    <style>
+        /* All previous styles remain exactly the same */
+        @font-face {
+            font-family: 'Papyrus';
+            src: url('papyrus.ttf') format('truetype');
+        }
+
+        :root {
+            --primary-glow: conic-gradient(
+                from 180deg at 50% 50%,
+                #16abff33 0deg,
+                #0885ff33 55deg,
+                #54d6ff33 120deg,
+                #0071ff33 160deg,
+                transparent 360deg
+            );
+            --secondary-glow: radial-gradient(
+                rgba(255, 255, 255, 1),
+                rgba(255, 255, 255, 0)
+            );
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #000000, #1a1a1a);
+            color: white;
+            font-family: 'Papyrus', system-ui, -apple-system, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: auto;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .background {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            opacity: 0.5;
+            background: url('fpl.png') repeat;
+            background-size: 200px 200px;
+        }
+
+        .background::before,
+        .background::after {
+            content: '';
+            position: fixed;
+            inset: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--primary-glow);
+            animation: rotate 20s linear infinite;
+            pointer-events: none;
+        }
+
+        .background::after {
+            background: var(--secondary-glow);
+            animation-delay: -10s;
+            filter: blur(50px);
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            background: linear-gradient(to right, #fff, #a5a5a5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 40px;
+            width: 100%;
+        }
+
+        button {
+            font-family: 'Papyrus', system-ui;
+            font-size: 1.2em;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            width: 45%;
+            max-width: 200px;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        button:hover::before {
+            transform: translateX(100%);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .result {
+            font-size: 150px;
+            font-weight: bold;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .result.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .red {
+            color: #ff4444;
+            text-shadow: 0 0 20px rgba(255, 68, 68, 0.5);
+        }
+
+        .green {
+            color: #44ff44;
+            text-shadow: 0 0 20px rgba(68, 255, 68, 0.5);
+        }
+
+        .fpl-loser {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards;
+            position: relative;
+            z-index: 1;
+        }
+
+        .fpl-loser h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, #a5a5a5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .fpl-loser img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .fpl-loser img:hover {
+            transform: scale(1.02);
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .content {
+                padding: 1rem;
+                margin: 10px auto;
+            }
+
+            h1 {
+                font-size: 1.5em;
+                margin-bottom: 20px;
+                padding: 0 10px;
+            }
+
+            .button-container {
+                flex-direction: row;
+                gap: 10px;
+                padding: 0 10px;
+            }
+
+            button {
+                padding: 12px 20px;
+                font-size: 1em;
+                width: 120px;
+                background: rgba(255, 255, 255, 0.2); /* Fixed button background on mobile */
+            }
+
+            button:hover {
+                background: rgba(255, 255, 255, 0.3); /* Darker on hover for better visibility */
+            }
+
+            .result {
+                font-size: 100px;
+            }
+
+            .fpl-loser {
+                padding: 15px;
+                margin: 10px auto;
+            }
+
+            .fpl-loser h2 {
+                font-size: 1.4em;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+
+    <div class="content">
+        <h1>Is the Louis Oscar gents haircut meme still massive?</h1>
+        <div class="button-container">
+            <button onclick="showResult('no')">No</button>
+            <button onclick="showResult('yes')">Yes</button>
+        </div>
+    </div>
+
+    <div id="overlay" class="overlay">
+        <div id="result" class="result"></div>
+    </div>
+
+    <div class="fpl-loser">
+        <h2>This week's FPL loser!</h2>
+        <img src="fpl.png" alt="FPL Loser Image">
+    </div>
+
+    <audio id="right-sound" src="right.mp3"></audio>
+    <audio id="wrong-sound" src="wrong.mp3"></audio>
+    <audio id="background-sound" src="sound.mp3" loop></audio>
+    <audio id="smoke-sound" src="smoke.mp3"></audio>
+
+    <script>
+        // Play background sound at 10% volume
+        const backgroundSound = document.getElementById('background-sound');
+        backgroundSound.volume = 0.1;
+        backgroundSound.play();
+
+        // Get smoke sound element
+        const smokeSound = document.getElementById('smoke-sound');
+        smokeSound.volume = 0.5; // Set volume to 50%
+
+        // Function to play smoke sound
+        function playSmoke() {
+            smokeSound.currentTime = 0; // Reset the audio to start
+            smokeSound.play();
+            
+            // Schedule next smoke sound
+            const nextDelay = Math.random() * (30000 - 10000) + 10000; // Random delay between 10-30 seconds
+            setTimeout(playSmoke, nextDelay);
+        }
+
+        // Start the smoke sound loop
+        setTimeout(playSmoke, Math.random() * (30000 - 10000) + 10000);
+
+        function showResult(answer) {
+            const overlay = document.getElementById('overlay');
+            const result = document.getElementById('result');
+            const rightSound = document.getElementById('right-sound');
+            const wrongSound = document.getElementById('wrong-sound');
+            
+            overlay.style.display = 'flex';
+            
+            // Reset classes and transition
+            result.className = 'result';
+            
+            // Force reflow
+            void result.offsetWidth;
+            
+            if (answer === 'yes') {
+                result.textContent = '✘';
+                result.classList.add('red');
+                wrongSound.play();
+            } else {
+                result.textContent = '✓';
+                result.classList.add('green');
+                rightSound.play();
+            }
+            
+            // Add show class for animation
+            result.classList.add('show');
+
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
