@@ -5,58 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gents Haircut</title>
     <style>
-        @font-face {
-            font-family: 'Papyrus';
-            src: url('papyrus.ttf') format('truetype');
+        :root {
+            --primary-color: #2a2a2a;
+            --accent-color: #4a90e2;
+            --background-color: #f5f5f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Papyrus', Arial, sans-serif;
-            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--background-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             padding: 20px;
-            background: linear-gradient(to bottom, white, #f0f0f0);
-            overflow-y: scroll;
-            height: 100vh;
-            box-sizing: border-box;
             position: relative;
+            overflow-x: hidden;
         }
 
-        /* Tiled and blurred background */
         .background {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: url('fpl.png') repeat;
             background-size: 200px 200px;
-            filter: blur(10px);
+            filter: blur(15px) opacity(0.1);
+            animation: backgroundPulse 10s ease-in-out infinite;
             z-index: -1;
         }
 
+        @keyframes backgroundPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
         h1 {
-            margin-bottom: 20px;
-            background-color: rgba(255, 255, 255, 0.7);
-            display: inline-block;
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 2em;
+            font-size: 2.5rem;
+            color: var(--primary-color);
             text-align: center;
+            margin: 2rem 0;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: translateY(-20px);
+            opacity: 0;
+            animation: slideDown 0.8s ease-out forwards;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
         }
 
         button {
-            font-size: 1.2em;
-            padding: 10px 20px;
-            margin: 10px;
-            cursor: pointer;
-            background-color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+            padding: 1rem 2.5rem;
             border: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
+            border-radius: 50px;
+            cursor: pointer;
+            background: white;
+            color: var(--primary-color);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        button:nth-child(2) {
+            animation-delay: 0.2s;
         }
 
         button:hover {
-            background-color: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            background: var(--accent-color);
+            color: white;
         }
 
         .overlay {
@@ -65,68 +109,114 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.8);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            backdrop-filter: blur(5px);
         }
 
         .result {
-            font-size: 100px;
-            color: white;
+            font-size: 120px;
             font-weight: bold;
+            transform: scale(0);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .red {
-            color: red;
+        .result.show {
+            transform: scale(1);
         }
 
-        .green {
-            color: green;
-        }
+        .red { color: #ff4444; }
+        .green { color: #00C851; }
 
         .fpl-loser {
-            margin-top: 50px;
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.5);
-            border-radius: 10px;
-            display: inline-block;
-            text-align: center;
             width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.8s ease-out forwards 0.4s;
+        }
+
+        .fpl-loser h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
         }
 
         .fpl-loser img {
-            max-width: 100%;
+            width: 100%;
             height: auto;
-            border: 2px solid black;
             border-radius: 10px;
+            transition: transform 0.3s ease;
         }
 
-        @media (max-width: 600px) {
+        .fpl-loser img:hover {
+            transform: scale(1.02);
+        }
+
+        @keyframes slideDown {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
             h1 {
-                font-size: 1.5em;
-                padding: 10px;
+                font-size: 1.8rem;
+                padding: 1rem;
+            }
+
+            .button-container {
+                flex-direction: column;
+                width: 100%;
+                padding: 0 2rem;
             }
 
             button {
-                font-size: 1em;
-                padding: 8px 16px;
+                width: 100%;
             }
 
             .result {
-                font-size: 80px;
+                font-size: 100px;
+            }
+
+            .fpl-loser {
+                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="background"></div> <!-- Blurred tiled background -->
+    <div class="background"></div>
+    
+    <div class="container">
+        <h1>Is the Louis Oscar gents haircut meme still massive?</h1>
+        
+        <div class="button-container">
+            <button onclick="showResult('no')">No</button>
+            <button onclick="showResult('yes')">Yes</button>
+        </div>
 
-    <h1>Is the Louis Oscar gents haircut meme still massive?</h1>
-    <button onclick="showResult('no')">No</button>
-    <button onclick="showResult('yes')">Yes</button>
+        <div class="fpl-loser">
+            <h2>This week's FPL loser!</h2>
+            <img src="fpl.png" alt="FPL Loser Image">
+        </div>
+    </div>
 
     <div id="overlay" class="overlay">
         <div id="result" class="result"></div>
@@ -137,29 +227,28 @@
     <audio id="background-sound" src="sound.mp3" loop></audio>
     <audio id="smoke-sound" src="smoke.mp3"></audio>
 
-    <div class="fpl-loser">
-        <h2>This week's FPL loser!</h2>
-        <img src="fpl.png" alt="FPL Loser Image">
-    </div>
-
     <script>
-        // Play background sound at 10% volume
-        const backgroundSound = document.getElementById('background-sound');
-        backgroundSound.volume = 0.1;
-        backgroundSound.play();
+        document.addEventListener('DOMContentLoaded', () => {
+            const backgroundSound = document.getElementById('background-sound');
+            backgroundSound.volume = 0.1;
+            backgroundSound.play().catch(() => {
+                console.log('Auto-play prevented');
+            });
 
-        // Function to play 'smoke.mp3' randomly every 10 to 30 seconds
-        function playSmokeSoundRandomly() {
-            setInterval(() => {
-                const delay = Math.random() * (30000 - 10000) + 10000; // Random delay between 10 to 30 seconds
-                setTimeout(() => {
-                    const smokeSound = document.getElementById('smoke-sound');
-                    smokeSound.play();
-                }, delay);
-            }, 30000); // Start the interval
-        }
+            function playSmokeSoundRandomly() {
+                setInterval(() => {
+                    const delay = Math.random() * (30000 - 10000) + 10000;
+                    setTimeout(() => {
+                        const smokeSound = document.getElementById('smoke-sound');
+                        smokeSound.play().catch(() => {
+                            console.log('Smoke sound prevented');
+                        });
+                    }, delay);
+                }, 30000);
+            }
 
-        playSmokeSoundRandomly();
+            playSmokeSoundRandomly();
+        });
 
         function showResult(answer) {
             const overlay = document.getElementById('overlay');
@@ -167,22 +256,25 @@
             const rightSound = document.getElementById('right-sound');
             const wrongSound = document.getElementById('wrong-sound');
 
-            if (answer === 'yes') {
-                result.textContent = 'X';
-                result.classList.add('red');
-                result.classList.remove('green');
-                wrongSound.play();
-            } else {
-                result.textContent = '✓'; // Unicode for a tick
-                result.classList.add('green');
-                result.classList.remove('red');
-                rightSound.play();
-            }
-
             overlay.style.display = 'flex';
+            
+            setTimeout(() => {
+                if (answer === 'yes') {
+                    result.textContent = 'X';
+                    result.className = 'result red show';
+                    wrongSound.play().catch(() => {});
+                } else {
+                    result.textContent = '✓';
+                    result.className = 'result green show';
+                    rightSound.play().catch(() => {});
+                }
+            }, 100);
 
             setTimeout(() => {
-                overlay.style.display = 'none';
+                result.classList.remove('show');
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 300);
             }, 1500);
         }
     </script>
