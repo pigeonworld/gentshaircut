@@ -59,19 +59,26 @@
         <div id="result" class="result"></div>
     </div>
 
+    <audio id="right-sound" src="right.mp3"></audio>
+    <audio id="wrong-sound" src="wrong.mp3"></audio>
+
     <script>
         function showResult(answer) {
             const overlay = document.getElementById('overlay');
             const result = document.getElementById('result');
+            const rightSound = document.getElementById('right-sound');
+            const wrongSound = document.getElementById('wrong-sound');
 
             if (answer === 'yes') {
                 result.textContent = 'X';
                 result.classList.add('red');
                 result.classList.remove('green');
+                wrongSound.play();
             } else {
                 result.textContent = '\u2713'; // Unicode for a tick
                 result.classList.add('green');
                 result.classList.remove('red');
+                rightSound.play();
             }
 
             overlay.style.display = 'flex';
