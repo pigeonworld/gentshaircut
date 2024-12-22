@@ -1,12 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- Previous head content remains the same until the new styles -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gents Haircut</title>
     <style>
-        /* Previous styles remain the same until flying-person */
+        @font-face {
+            font-family: 'Papyrus';
+            src: url('papyrus.ttf') format('truetype');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Papyrus', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+            background: #f5f5f5;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('fpl.png') repeat;
+            background-size: 200px 200px;
+            filter: blur(15px) opacity(0.1);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-container {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        button {
+            font-family: 'Papyrus', sans-serif;
+            font-size: 1.2rem;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            background: #4a90e2;
+            color: white;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+            backdrop-filter: blur(5px);
+        }
+
+        .result {
+            font-size: 120px;
+            font-weight: bold;
+            transform: scale(0);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .result.show {
+            transform: scale(1);
+        }
+
+        .red { color: #ff4444; }
+        .green { color: #00C851; }
+
+        .fpl-loser {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .fpl-loser h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .fpl-loser img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
 
         .flying-person {
             position: fixed;
@@ -14,16 +142,15 @@
             height: auto;
             z-index: 1000;
             cursor: pointer;
-            transition: transform 0.1s ease-out;
         }
 
         .flying-person.pop {
-            animation: popAnimation 0.3s ease-out forwards;
+            animation: pop 0.3s ease-out forwards;
         }
 
-        @keyframes popAnimation {
+        @keyframes pop {
             0% {
-                transform: scale(1) rotate(0deg);
+                transform: scale(1);
                 opacity: 1;
             }
             50% {
@@ -36,97 +163,136 @@
             }
         }
 
-        @keyframes flyAcross {
-            0% {
-                transform: translate(-120px, 0) rotate(0deg);
+        @keyframes fly {
+            from {
+                left: -100px;
+                transform: rotate(0deg);
             }
-            100% {
-                transform: translate(calc(100vw + 120px), 0) rotate(360deg);
+            to {
+                left: 100vw;
+                transform: rotate(360deg);
             }
         }
 
-        /* Rest of the previous styles remain the same */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+                padding: 1rem;
+            }
 
+            .button-container {
+                flex-direction: column;
+                width: 100%;
+                padding: 0 2rem;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .result {
+                font-size: 100px;
+            }
+
+            .fpl-loser {
+                padding: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Previous HTML content remains the same -->
+    <div class="background"></div>
+    
+    <div class="container">
+        <h1>Is the Louis Oscar gents haircut meme still massive?</h1>
+        
+        <div class="button-container">
+            <button onclick="showResult('no')">No</button>
+            <button onclick="showResult('yes')">Yes</button>
+        </div>
+
+        <div class="fpl-loser">
+            <h2>This week's FPL loser!</h2>
+            <img src="fpl.png" alt="FPL Loser Image">
+        </div>
+    </div>
+
+    <div id="overlay" class="overlay">
+        <div id="result" class="result"></div>
+    </div>
+
+    <audio id="right-sound" src="right.mp3"></audio>
+    <audio id="wrong-sound" src="wrong.mp3"></audio>
+    <audio id="background-sound" src="sound.mp3" loop></audio>
+    <audio id="smoke-sound" src="smoke.mp3"></audio>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Start background music
             const backgroundSound = document.getElementById('background-sound');
             backgroundSound.volume = 0.1;
-            backgroundSound.play().catch(() => {
-                console.log('Auto-play prevented');
-            });
+            backgroundSound.play().catch(() => console.log('Autoplay prevented'));
 
             function createFlyingPerson() {
                 const person = document.createElement('img');
                 person.src = 'person.png';
                 person.className = 'flying-person';
                 
+                // Random vertical position
                 const verticalPosition = Math.random() * (window.innerHeight - 100);
                 person.style.top = verticalPosition + 'px';
                 
-                const duration = 2 + Math.random() * 2;
-                person.style.animation = `flyAcross ${duration}s linear`;
+                // Set animation
+                person.style.animation = 'fly 3s linear';
                 
-                // Add click handler for popping
+                // Add click handler
                 person.addEventListener('click', () => {
-                    // Play a pop sound if available
+                    person.style.animation = 'none'; // Stop flying
+                    person.classList.add('pop');
+                    
+                    // Play pop sound
                     const smokeSound = document.getElementById('smoke-sound');
                     smokeSound.currentTime = 0;
                     smokeSound.play().catch(() => {});
-                    
-                    // Add pop animation
-                    person.style.animation = 'none';
-                    person.classList.add('pop');
-                    
-                    // Remove after pop animation
-                    setTimeout(() => {
-                        person.remove();
-                    }, 300);
+                });
+                
+                // Remove after animation or pop
+                person.addEventListener('animationend', () => {
+                    person.remove();
                 });
                 
                 document.body.appendChild(person);
-                
-                // Remove if not popped by end of animation
-                person.addEventListener('animationend', () => {
-                    if (!person.classList.contains('pop')) {
-                        person.remove();
-                    }
-                });
             }
 
-            // Create flying person more frequently (every 2-4 seconds)
-            function spawnPeople() {
-                setInterval(() => {
-                    createFlyingPerson();
-                }, 2000 + Math.random() * 2000); // Random delay between 2-4 seconds
-            }
-
-            // Initial spawn
-            spawnPeople();
-
-            // Original smoke sound interval (kept for audio variety)
-            function playSmokeSoundRandomly() {
-                setInterval(() => {
-                    const delay = Math.random() * (10000 - 5000) + 5000; // Reduced to 5-10 seconds
-                    setTimeout(() => {
-                        const smokeSound = document.getElementById('smoke-sound');
-                        smokeSound.play().catch(() => {
-                            console.log('Smoke sound prevented');
-                        });
-                        createFlyingPerson(); // Extra spawn with smoke sound
-                    }, delay);
-                }, 10000);
-            }
-
-            playSmokeSoundRandomly();
+            // Create person every 2-4 seconds
+            setInterval(createFlyingPerson, 2000 + Math.random() * 2000);
         });
 
-        // Previous showResult function remains the same
+        function showResult(answer) {
+            const overlay = document.getElementById('overlay');
+            const result = document.getElementById('result');
+            
+            overlay.style.display = 'flex';
+            
+            setTimeout(() => {
+                if (answer === 'yes') {
+                    result.textContent = 'X';
+                    result.className = 'result red show';
+                    document.getElementById('wrong-sound').play().catch(() => {});
+                } else {
+                    result.textContent = '✓';
+                    result.className = 'result green show';
+                    document.getElementById('right-sound').play().catch(() => {});
+                }
+            }, 100);
 
+            setTimeout(() => {
+                result.classList.remove('show');
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 300);
+            }, 1500);
+        }
     </script>
 </body>
 </html>
