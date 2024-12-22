@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gents Haircut</title>
     <style>
-        /* All previous styles remain exactly the same */
+        /* All previous styles remain the same */
         @font-face {
             font-family: 'Papyrus';
             src: url('papyrus.ttf') format('truetype');
@@ -113,7 +113,7 @@
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            background: rgba(255, 255, 255, 0.1);
+            background: #808080; /* Grey background for buttons */
             color: white;
             backdrop-filter: blur(5px);
             transition: all 0.3s ease;
@@ -258,11 +258,11 @@
                 padding: 12px 20px;
                 font-size: 1em;
                 width: 120px;
-                background: rgba(255, 255, 255, 0.2); /* Fixed button background on mobile */
+                background: #808080; /* Grey background for mobile buttons */
             }
 
             button:hover {
-                background: rgba(255, 255, 255, 0.3); /* Darker on hover for better visibility */
+                background: #707070; /* Darker grey on hover for mobile */
             }
 
             .result {
@@ -344,17 +344,12 @@
             void result.offsetWidth;
             
             if (answer === 'yes') {
-                result.textContent = '✘';
-                result.classList.add('red');
-                wrongSound.play();
-            } else {
-                result.textContent = '✓';
-                result.classList.add('green');
+                result.classList.add('show', 'green');
                 rightSound.play();
+            } else {
+                result.classList.add('show', 'red');
+                wrongSound.play();
             }
-            
-            // Add show class for animation
-            result.classList.add('show');
 
             setTimeout(() => {
                 overlay.style.display = 'none';
