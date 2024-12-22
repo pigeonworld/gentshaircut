@@ -37,6 +37,11 @@
             align-items: center;
             overflow-y: auto;
             position: relative;
+            box-sizing: border-box;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         .background {
@@ -73,13 +78,13 @@
             position: relative;
             z-index: 1;
             text-align: center;
-            padding: 2rem;
+            padding: 1.5rem;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            width: 100%;
             max-width: 800px;
-            width: 90%;
             margin: 20px auto;
         }
 
@@ -97,6 +102,7 @@
             gap: 20px;
             justify-content: center;
             margin-bottom: 40px;
+            width: 100%;
         }
 
         button {
@@ -112,6 +118,8 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            width: 45%;
+            max-width: 200px;
         }
 
         button::before {
@@ -174,12 +182,12 @@
         .fpl-loser {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            padding: 30px;
+            padding: 20px;
             border-radius: 20px;
             text-align: center;
+            width: 100%;
             max-width: 800px;
-            width: 90%;
-            margin: 40px auto;
+            margin: 20px auto;
             transform: translateY(20px);
             opacity: 0;
             animation: slideUp 0.8s ease forwards;
@@ -224,16 +232,45 @@
         }
 
         @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .content {
+                padding: 1rem;
+                margin: 10px auto;
+            }
+
             h1 {
-                font-size: 1.8em;
+                font-size: 1.5em;
+                margin-bottom: 20px;
+                padding: 0 10px;
             }
 
             .button-container {
-                flex-direction: column;
+                flex-direction: row;
+                gap: 10px;
+                padding: 0 10px;
+            }
+
+            button {
+                padding: 12px 20px;
+                font-size: 1em;
+                width: 120px;
             }
 
             .result {
                 font-size: 100px;
+            }
+
+            .fpl-loser {
+                padding: 15px;
+                margin: 10px auto;
+            }
+
+            .fpl-loser h2 {
+                font-size: 1.4em;
+                margin-bottom: 15px;
             }
         }
     </style>
