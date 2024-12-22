@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gents Haircut</title>
+    <title>Louis Oscar Meme</title>
     <style>
         @font-face {
             font-family: 'Papyrus';
@@ -53,6 +53,16 @@
         .green {
             color: green;
         }
+
+        .fpl-loser {
+            margin-top: 50px;
+        }
+
+        .fpl-loser img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid black;
+        }
     </style>
 </head>
 <body>
@@ -67,6 +77,11 @@
     <audio id="right-sound" src="right.mp3"></audio>
     <audio id="wrong-sound" src="wrong.mp3"></audio>
 
+    <div class="fpl-loser">
+        <h2>This week's FPL loser!</h2>
+        <img src="placeholder.jpg" alt="FPL Loser Image">
+    </div>
+
     <script>
         function showResult(answer) {
             const overlay = document.getElementById('overlay');
@@ -80,7 +95,7 @@
                 result.classList.remove('green');
                 wrongSound.play();
             } else {
-                result.textContent = '\u2713'; // Unicode for a tick
+                result.textContent = '✓'; // Unicode for a tick
                 result.classList.add('green');
                 result.classList.remove('red');
                 rightSound.play();
