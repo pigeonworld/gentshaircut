@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gents Haircut</title>
+    <title>Haircut Meme</title>
     <style>
         @font-face {
             font-family: 'Papyrus';
@@ -14,18 +14,19 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            user-select: none;
+            -webkit-user-drag: none;
         }
 
         body {
             font-family: 'Papyrus', sans-serif;
             min-height: 100vh;
+            background: #f5f5f5;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px;
-            position: relative;
             overflow-x: hidden;
-            background: #f5f5f5;
         }
 
         .background {
@@ -41,49 +42,67 @@
         }
 
         .container {
-            max-width: 800px;
             width: 100%;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
+            max-width: 800px;
             z-index: 1;
         }
 
         h1 {
-            font-size: 2.5rem;
             text-align: center;
-            margin: 2rem 0;
-            padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .button-container {
+        .buttons {
             display: flex;
-            gap: 1rem;
-            margin: 2rem 0;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
         }
 
         button {
             font-family: 'Papyrus', sans-serif;
-            font-size: 1.2rem;
-            padding: 1rem 2.5rem;
+            padding: 10px 30px;
+            font-size: 1.2em;
             border: none;
-            border-radius: 50px;
-            cursor: pointer;
+            border-radius: 5px;
             background: white;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-            background: #4a90e2;
-            color: white;
+        .fpl-loser {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .fpl-loser img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .person {
+            position: fixed;
+            width: 100px;
+            height: auto;
+            cursor: pointer;
+            z-index: 10;
+            pointer-events: all;
+        }
+
+        .particle {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
         }
 
         .overlay {
@@ -92,111 +111,16 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background: rgba(0,0,0,0.8);
             display: none;
             justify-content: center;
             align-items: center;
-            z-index: 1001;
-            backdrop-filter: blur(5px);
+            z-index: 100;
         }
 
         .result {
             font-size: 120px;
-            font-weight: bold;
-            transform: scale(0);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .result.show {
-            transform: scale(1);
-        }
-
-        .red { color: #ff4444; }
-        .green { color: #00C851; }
-
-        .fpl-loser {
-            width: 100%;
-            max-width: 600px;
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .fpl-loser h2 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .fpl-loser img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            transition: transform 0.3s ease;
-        }
-
-        .flying-person {
-            position: fixed;
-            width: 100px;
-            height: auto;
-            z-index: 1000;
-            cursor: pointer;
-        }
-
-        .flying-person.pop {
-            animation: pop 0.3s ease-out forwards;
-        }
-
-        @keyframes pop {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.5) rotate(180deg);
-                opacity: 0.5;
-            }
-            100% {
-                transform: scale(0) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        @keyframes fly {
-            from {
-                left: -100px;
-                transform: rotate(0deg);
-            }
-            to {
-                left: 100vw;
-                transform: rotate(360deg);
-            }
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 1.8rem;
-                padding: 1rem;
-            }
-
-            .button-container {
-                flex-direction: column;
-                width: 100%;
-                padding: 0 2rem;
-            }
-
-            button {
-                width: 100%;
-            }
-
-            .result {
-                font-size: 100px;
-            }
-
-            .fpl-loser {
-                padding: 1.5rem;
-            }
+            color: white;
         }
     </style>
 </head>
@@ -205,94 +129,129 @@
     
     <div class="container">
         <h1>Is the Louis Oscar gents haircut meme still massive?</h1>
-        
-        <div class="button-container">
-            <button onclick="showResult('no')">No</button>
-            <button onclick="showResult('yes')">Yes</button>
+        <div class="buttons">
+            <button onclick="showResult(false)">No</button>
+            <button onclick="showResult(true)">Yes</button>
         </div>
-
         <div class="fpl-loser">
             <h2>This week's FPL loser!</h2>
-            <img src="fpl.png" alt="FPL Loser Image">
+            <img src="fpl.png" alt="FPL Loser" draggable="false">
         </div>
     </div>
 
-    <div id="overlay" class="overlay">
-        <div id="result" class="result"></div>
+    <div class="overlay">
+        <div class="result"></div>
     </div>
 
-    <audio id="right-sound" src="right.mp3"></audio>
-    <audio id="wrong-sound" src="wrong.mp3"></audio>
-    <audio id="background-sound" src="sound.mp3" loop></audio>
-    <audio id="smoke-sound" src="smoke.mp3"></audio>
+    <audio id="background" src="sound.mp3" loop></audio>
+    <audio id="smoke" src="smoke.mp3"></audio>
+    <audio id="right" src="right.mp3"></audio>
+    <audio id="wrong" src="wrong.mp3"></audio>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Start background music
-            const backgroundSound = document.getElementById('background-sound');
-            backgroundSound.volume = 0.1;
-            backgroundSound.play().catch(() => console.log('Autoplay prevented'));
+        function createParticles(x, y) {
+            const colors = ['#FF4444', '#4A90E2', '#FFFFFF', '#FFEB3B'];
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
 
-            function createFlyingPerson() {
-                const person = document.createElement('img');
-                person.src = 'person.png';
-                person.className = 'flying-person';
+                const angle = (Math.random() * Math.PI * 2);
+                const velocity = 5 + Math.random() * 15;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+
+                document.body.appendChild(particle);
+
+                let opacity = 1;
+                let scale = 1;
+                let posX = x;
+                let posY = y;
+
+                function animate() {
+                    if (opacity <= 0) {
+                        particle.remove();
+                        return;
+                    }
+
+                    posX += vx;
+                    posY += vy;
+                    opacity -= 0.02;
+                    scale -= 0.02;
+
+                    particle.style.transform = `translate(${posX - x}px, ${posY - y}px) scale(${scale})`;
+                    particle.style.opacity = opacity;
+
+                    requestAnimationFrame(animate);
+                }
+
+                requestAnimationFrame(animate);
+            }
+        }
+
+        function spawnPerson() {
+            const person = document.createElement('img');
+            person.src = 'person.png';
+            person.className = 'person';
+            person.draggable = false;
+            
+            const y = Math.random() * (window.innerHeight - 100);
+            person.style.top = y + 'px';
+            person.style.left = '-100px';
+
+            person.addEventListener('click', () => {
+                const rect = person.getBoundingClientRect();
+                createParticles(rect.left + rect.width/2, rect.top + rect.height/2);
+                document.getElementById('smoke').play().catch(() => {});
+                person.remove();
+            });
+
+            document.body.appendChild(person);
+
+            let x = -100;
+            let rotation = 0;
+
+            function animate() {
+                if (!person.isConnected) return;
                 
-                // Random vertical position
-                const verticalPosition = Math.random() * (window.innerHeight - 100);
-                person.style.top = verticalPosition + 'px';
-                
-                // Set animation
-                person.style.animation = 'fly 3s linear';
-                
-                // Add click handler
-                person.addEventListener('click', () => {
-                    person.style.animation = 'none'; // Stop flying
-                    person.classList.add('pop');
-                    
-                    // Play pop sound
-                    const smokeSound = document.getElementById('smoke-sound');
-                    smokeSound.currentTime = 0;
-                    smokeSound.play().catch(() => {});
-                });
-                
-                // Remove after animation or pop
-                person.addEventListener('animationend', () => {
+                x += 5;
+                rotation += 2;
+                person.style.left = x + 'px';
+                person.style.transform = `rotate(${rotation}deg)`;
+
+                if (x < window.innerWidth + 100) {
+                    requestAnimationFrame(animate);
+                } else {
                     person.remove();
-                });
-                
-                document.body.appendChild(person);
+                }
             }
 
-            // Create person every 2-4 seconds
-            setInterval(createFlyingPerson, 2000 + Math.random() * 2000);
-        });
+            requestAnimationFrame(animate);
+        }
 
-        function showResult(answer) {
-            const overlay = document.getElementById('overlay');
-            const result = document.getElementById('result');
+        function showResult(isYes) {
+            const overlay = document.querySelector('.overlay');
+            const result = document.querySelector('.result');
             
             overlay.style.display = 'flex';
+            result.textContent = isYes ? 'X' : '✓';
+            result.style.color = isYes ? '#FF4444' : '#00C851';
             
-            setTimeout(() => {
-                if (answer === 'yes') {
-                    result.textContent = 'X';
-                    result.className = 'result red show';
-                    document.getElementById('wrong-sound').play().catch(() => {});
-                } else {
-                    result.textContent = '✓';
-                    result.className = 'result green show';
-                    document.getElementById('right-sound').play().catch(() => {});
-                }
-            }, 100);
+            document.getElementById(isYes ? 'wrong' : 'right').play().catch(() => {});
 
             setTimeout(() => {
-                result.classList.remove('show');
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                }, 300);
+                overlay.style.display = 'none';
             }, 1500);
         }
+
+        // Start background music
+        document.getElementById('background').volume = 0.1;
+        document.getElementById('background').play().catch(() => {});
+
+        // Spawn people regularly
+        setInterval(spawnPerson, 2000);
     </script>
 </body>
 </html>
