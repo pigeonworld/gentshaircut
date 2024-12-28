@@ -75,14 +75,16 @@
         }
 
         .fpl-loser {
+            display: flex;
+            gap: 20px;
             background: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .fpl-loser img {
-            width: 100%;
+        .fpl-loser img, .fpl-loser video {
+            width: 48%;
             height: auto;
             border-radius: 5px;
         }
@@ -134,10 +136,8 @@
             <button onclick="showResult(true)">Yes</button>
         </div>
         <div class="fpl-loser">
-            <h1> FANTASY LEAGUE </h1>
-            <h2>This week's FPL loser!</h2>
-            
             <img src="fpl.png" alt="FPL Loser" draggable="false">
+            <video src="forfeit.mp4" autoplay muted loop></video>
         </div>
     </div>
 
