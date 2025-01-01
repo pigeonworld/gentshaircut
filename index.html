@@ -77,10 +77,15 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
+        .video-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
         .video-container {
             width: 100%;
             max-width: 800px;
-            margin: 20px auto;
             position: relative;
             padding-top: 56.25%; /* Maintains 16:9 aspect ratio */
             background: white;
@@ -96,13 +101,6 @@
             width: 100%;
             height: 100%;
             border: none;
-        }
-
-        .video-title {
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-top: 10px;
-            margin-bottom: 10px;
         }
 
         .overlay {
@@ -133,8 +131,9 @@
             <button onclick="showResult(false)">No</button>
             <button onclick="showResult(true)">Yes</button>
         </div>
+        
+        <div class="video-title">Happy New Year from Ben Himself</div>
         <div class="video-container">
-            <div class="video-title">Happy New Year from Ben Himself</div>
             <iframe 
                 allow="fullscreen;autoplay" 
                 allowfullscreen 
