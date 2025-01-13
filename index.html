@@ -1,90 +1,182 @@
+Here’s the updated HTML where the video is replaced by the image matthew.JPG from your GitHub repository:
+
+Full HTML
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your number one place for the best haircut">
+    <link rel="icon" href="icon.png" type="image/png">
     <title>Gents Haircut</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #000;
-            color: #fff;
+        @font-face {
+            font-family: 'Papyrus';
+            src: url('papyrus.ttf') format('truetype');
         }
 
-        iframe {
-            width: 90%;
-            max-width: 720px;
-            aspect-ratio: 16 / 9;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        body {
+            font-family: 'Papyrus', sans-serif;
+            min-height: 100vh;
+            background: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('fpl.png') repeat;
+            background-size: 200px 200px;
+            filter: blur(15px) opacity(0.1);
+            z-index: -1;
         }
 
         .container {
+            width: 100%;
+            max-width: 800px;
+            z-index: 1;
             text-align: center;
-            padding: 20px;
-            color: #333;
         }
 
         h1 {
-            font-size: 2rem;
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
             margin-bottom: 20px;
-        }
-
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .buttons {
             display: flex;
-            justify-content: center;
             gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
         }
 
         button {
-            padding: 10px 20px;
-            font-size: 1rem;
+            font-family: 'Papyrus', sans-serif;
+            padding: 10px 30px;
+            font-size: 1.2em;
             border: none;
             border-radius: 5px;
+            background: white;
             cursor: pointer;
-            background: #007BFF;
-            color: #fff;
-            transition: background 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        button:hover {
-            background: #0056b3;
+        .image-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .image-container {
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 0 auto;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .result {
+            font-size: 120px;
+            color: white;
         }
     </style>
 </head>
 <body>
-    <script>
-        // Get the current URL path
-        const path = window.location.pathname;
+    <div class="background"></div>
+    
+    <div class="container">
+        <h1>Is the Louis Oscar gents haircut meme still massive?</h1>
+        <div class="buttons">
+            <button onclick="showResult(false)">No</button>
+            <button onclick="showResult(true)">Yes</button>
+        </div>
+        
+        <div class="image-title">A Special Appearance from Matthew</div>
+        <div class="image-container">
+            <img src="https://raw.githubusercontent.com/your-github-username/your-repository/main/matthew.JPG" alt="Matthew">
+        </div>
+    </div>
 
-        // Check if the path is "/dillon"
-        if (path === '/dillon' || path === '/dillon.html') {
-            document.body.innerHTML = `
-                <iframe src="https://streamable.com/e/0hnpac?autoplay=1&controls=1" allow="autoplay; fullscreen" allowfullscreen></iframe>
-            `;
-        } else {
-            // Default content for the main page
-            document.body.innerHTML = `
-                <div class="container">
-                    <h1>Welcome to Gents Haircut</h1>
-                    <p>Your number one place for the best haircut.</p>
-                    <div class="buttons">
-                        <button onclick="location.href='/dillon'">Watch Dillon's Video</button>
-                    </div>
-                </div>
-            `;
+    <div class="overlay">
+        <div class="result"></div>
+    </div>
+
+    <audio id="background" src="sound.mp3" loop></audio>
+    <audio id="smoke" src="smoke.mp3"></audio>
+    <audio id="right" src="right.mp3"></audio>
+    <audio id="wrong" src="wrong.mp3"></audio>
+
+    <script>
+        function showResult(isYes) {
+            const overlay = document.querySelector('.overlay');
+            const result = document.querySelector('.result');
+            
+            overlay.style.display = 'flex';
+            result.textContent = isYes ? 'X' : '✓';
+            result.style.color = isYes ? '#FF4444' : '#00C851';
+            
+            document.getElementById(isYes ? 'wrong' : 'right').play().catch(() => {});
+
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 1500);
         }
+
+        document.getElementById('background').volume = 0.1;
+        document.getElementById('background').play().catch(() => {});
     </script>
 </body>
 </html>
+
+Changes:
+	1.	Image Replacement:
+	•	The video container was replaced with an image container displaying matthew.JPG hosted on GitHub.
+	•	Ensure you replace your-github-username/your-repository with your actual GitHub username and repository name in the image URL.
+	2.	Title Updated:
+	•	The title above the image now reads “A Special Appearance from Matthew.”
+	3.	Responsive Design:
+	•	The image container adapts to a maximum width of 400px and ensures the image is responsive.
+
+Let me know if you need further adjustments!
