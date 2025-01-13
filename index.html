@@ -3,230 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Your number one place for the best haircut">
-    <link rel="icon" href="icon.png" type="image/png">
     <title>Gents Haircut</title>
     <style>
-        @font-face {
-            font-family: 'Papyrus';
-            src: url('papyrus.ttf') format('truetype');
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            user-select: none;
-            -webkit-user-drag: none;
-        }
-
         body {
-            font-family: 'Papyrus', sans-serif;
-            min-height: 100vh;
-            background: #1a1a1a;
-            color: #ffffff;
+            font-family: Arial, sans-serif;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            padding: 20px;
-            overflow-x: hidden;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #000;
+            color: #fff;
         }
 
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('fpl.png') repeat;
-            background-size: 200px 200px;
-            filter: blur(15px) opacity(0.05);
-            z-index: -1;
-            animation: backgroundFloat 60s linear infinite;
-        }
-
-        @keyframes backgroundFloat {
-            0% { background-position: 0 0; }
-            100% { background-position: 200px 200px; }
+        iframe {
+            width: 90%;
+            max-width: 720px;
+            aspect-ratio: 16 / 9;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
 
         .container {
-            width: 100%;
-            max-width: 1200px;
-            z-index: 1;
             text-align: center;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            color: #333;
         }
 
         h1 {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            text-align: center;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            margin-bottom: 30px;
-            transform: scale(1);
-            transition: transform 0.3s ease;
+            font-size: 2rem;
+            margin-bottom: 20px;
         }
 
-        h1:hover {
-            transform: scale(1.02);
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
         }
 
         .buttons {
             display: flex;
-            gap: 20px;
             justify-content: center;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
+            gap: 10px;
         }
 
         button {
-            font-family: 'Papyrus', sans-serif;
-            padding: 15px 40px;
-            font-size: clamp(1rem, 3vw, 1.2rem);
+            padding: 10px 20px;
+            font-size: 1rem;
             border: none;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
+            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #007BFF;
+            color: #fff;
+            transition: background 0.3s;
         }
 
         button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        .video-title {
-            font-size: clamp(1.2rem, 3vw, 1.5rem);
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .video-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .video-container iframe {
-            width: 100%;
-            aspect-ratio: 9 / 16;
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .video-container iframe:hover {
-            transform: scale(1.02);
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-        }
-
-        .result {
-            font-size: clamp(80px, 20vw, 120px);
-            color: white;
-            animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
-        @keyframes popIn {
-            0% { transform: scale(0); }
-            100% { transform: scale(1); }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-
-            .buttons {
-                flex-direction: column;
-                padding: 0 20px;
-            }
-
-            button {
-                width: 100%;
-            }
+            background: #0056b3;
         }
     </style>
 </head>
 <body>
-    <div class="background"></div>
-    
-    <div class="container">
-        <h1>Is the Louis Oscar gents haircut meme still massive?</h1>
-        <div class="buttons">
-            <button onclick="showResult(false)">No</button>
-            <button onclick="showResult(true)">Yes</button>
-        </div>
-        
-        <div class="video-title">Double the Fun</div>
-        <div class="video-container">
-            <iframe src="https://streamable.com/e/ltv3h7?autoplay=1&controls=1"></iframe>
-            <iframe src="https://streamable.com/e/hdx46a?autoplay=1&controls=1"></iframe>
-        </div>
-    </div>
-
-    <div class="overlay">
-        <div class="result"></div>
-    </div>
-
- 
-    <audio id="smoke" src="smoke.mp3"></audio>
-    <audio id="right" src="right.mp3"></audio>
-    <audio id="wrong" src="wrong.mp3"></audio>
-
     <script>
-        function showResult(isYes) {
-            const overlay = document.querySelector('.overlay');
-            const result = document.querySelector('.result');
-            
-            overlay.style.display = 'flex';
-            result.textContent = isYes ? 'X' : '✓';
-            result.style.color = isYes ? '#FF4444' : '#00C851';
-            
-            document.getElementById(isYes ? 'wrong' : 'right').play().catch(() => {});
+        // Get the current URL path
+        const path = window.location.pathname;
 
-            setTimeout(() => {
-                overlay.style.display = 'none';
-            }, 1500);
+        // Check if the path is "/dillon"
+        if (path === '/dillon' || path === '/dillon.html') {
+            document.body.innerHTML = `
+                <iframe src="https://streamable.com/e/0hnpac?autoplay=1&controls=1" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            `;
+        } else {
+            // Default content for the main page
+            document.body.innerHTML = `
+                <div class="container">
+                    <h1>Welcome to Gents Haircut</h1>
+                    <p>Your number one place for the best haircut.</p>
+                    <div class="buttons">
+                        <button onclick="location.href='/dillon'">Watch Dillon's Video</button>
+                    </div>
+                </div>
+            `;
         }
-
-        // Add touch events for mobile
-        document.addEventListener('touchstart', function() {
-            document.getElementById('background').volume = 0.1;
-            document.getElementById('background').play().catch(() => {});
-        }, { once: true });
-
-        // Try to play background music on desktop
-        document.getElementById('background').volume = 0.1;
-        document.getElementById('background').play().catch(() => {});
     </script>
 </body>
 </html>
