@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            color: white;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            animation: fadeDown 0.8s ease-out;
+        }
+
+        .header h1 {
+            font-size: 4em;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -1px;
+        }
+
+        .haircut-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px;
+            animation: fadeUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .haircut-option {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-decoration: none;
+            display: block;
+        }
+
+        .haircut-option:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+
+            .haircut-options {
+                grid-template-columns: 1fr;
+                padding: 10px;
+            }
+
+            .haircut-option {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Gents Haircut</h1>
+        </div>
+
+        <div class="haircut-options">
+            <a href="/news" class="haircut-option">
+                <h3>News</h3>
+            </a>
+
+            <a href="/fpl" class="haircut-option">
+                <h3>FPL</h3>
+            </a>
+
+            <a href="/alfie-cook" class="haircut-option">
+                <h3>Alfie Cook</h3>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
