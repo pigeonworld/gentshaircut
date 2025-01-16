@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gents Haircut</title>
     <style>
+        /* General Reset */
         * {
             margin: 0;
             padding: 0;
@@ -25,11 +28,10 @@
         .header {
             text-align: center;
             padding: 40px 0;
-            animation: fadeDown 0.8s ease-out;
         }
 
         .header h1 {
-            font-size: 4em;
+            font-size: 3em;
             font-weight: 800;
             color: white;
             letter-spacing: -1px;
@@ -40,7 +42,6 @@
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
             padding: 20px;
-            animation: fadeUp 0.8s ease-out 0.2s backwards;
         }
 
         .haircut-option {
@@ -62,32 +63,10 @@
             border-color: rgba(255, 255, 255, 0.2);
         }
 
-        h3 {
+        .haircut-option h3 {
             font-size: 1.8em;
             color: white;
             letter-spacing: -0.5px;
-        }
-
-        @keyframes fadeDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         @media (max-width: 768px) {
@@ -113,15 +92,15 @@
         </div>
 
         <div class="haircut-options">
-            <a href="./News/" class="haircut-option">
+            <a href="./news/" class="haircut-option">
                 <h3>News</h3>
             </a>
 
-            <a href="./FPL/" class="haircut-option">
+            <a href="./fpl/" class="haircut-option">
                 <h3>FPL</h3>
             </a>
 
-            <a href="./Alfie/" class="haircut-option">
+            <a href="./alfie/" class="haircut-option">
                 <h3>Alfie Cook</h3>
             </a>
         </div>
