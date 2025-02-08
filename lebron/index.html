@@ -8,17 +8,17 @@
     <link rel="stylesheet" href="style.css">
     
 </head>
-<body;">
+<body style="padding-left: 40%;">
+
     <h1>
         LE VRO
     </h1>
     <img src="lebon.png" alt="" width="200" height="400" class="lebron" id = "lebron">
     <h2> le slider</h2>
-    <input type="range" min="0" max="1" step = "0.05" class="slider" id="sliderthing">
+    <input type="range" min="0" max="1" step = "0.0001" class="slider" id="sliderthing">
     <h2> le tick</h2>
     <input type="checkbox" name="check" id="check" checked = True>
     <script>
-        const check = document.getElementById('check')
         const slider = document.getElementById('sliderthing');
         const lebron = document.getElementById('lebron');
 
@@ -36,6 +36,7 @@
         slider.addEventListener('input',function()
         {
             let opacityValue = slider.value;
+            lebron.style.scale = opacityValue;
             lebron.style.opacity = opacityValue;
         });
         
